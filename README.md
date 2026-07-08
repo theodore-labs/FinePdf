@@ -17,7 +17,8 @@ N-up PDF converter for Windows that trims wasted margins so your text stays read
 ---
 
 <!-- 데모 GIF를 만들면 아래 줄을 교체하세요: 이 파일을 GitHub 웹에디터에 드래그&드롭하면 URL이 자동 생성됩니다 -->
-<img width="2020" height="1258" alt="Animation3" src="https://github.com/user-attachments/assets/f9b01186-eca2-4316-a5ad-e9e2ad5c54eb" />
+<img width="1766" height="1142" alt="Animation4" src="https://github.com/user-attachments/assets/c94242bc-4219-476b-98bc-a21f5c6faf12" />
+
 
 
 ## What is FinePdf?
