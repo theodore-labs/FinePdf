@@ -128,6 +128,18 @@
   details p{margin:14px 0 0; font-size:16px}
   details p:last-child{margin-bottom:0}
 
+  .tablewrap{overflow-x:auto; margin-top:28px; -webkit-overflow-scrolling:touch}
+  table.cmp{border-collapse:collapse; width:100%; min-width:520px; font-size:15.5px}
+  table.cmp th,table.cmp td{border-bottom:1px solid var(--line); padding:12px 14px; text-align:left}
+  table.cmp thead th{color:var(--ink); font-size:15px; border-bottom:2px solid var(--line)}
+  table.cmp th:first-child{width:44%}
+  table.cmp td{text-align:center; white-space:nowrap}
+  table.cmp td:first-child{text-align:left; white-space:normal; color:var(--ink)}
+  .yes{color:var(--accent); font-weight:700}
+  .no{color:#c0392b; font-weight:700}
+  .partial{color:#b7791f; font-weight:700}
+  .cmp-note{margin-top:12px; font-size:14px; color:var(--mute)}
+
   footer{border-top:1px solid var(--line); padding:44px 0 56px; font-size:14.5px; color:var(--mute)}
   footer a{color:var(--mute)}
   .center{text-align:center}
@@ -145,6 +157,7 @@
     프린터의 모아찍기는 글자를 못 알아볼 만큼 줄여버립니다.
     원인은 폰트가 아니라 <strong>여백</strong>입니다.
     FinePdf는 페이지마다 실제 내용 영역을 찾아 여백을 먼저 잘라낸 뒤 배치합니다.
+    <strong>여백만 자르고, 내용은 자르지 않습니다.</strong>
   </p>
 
   <a class="btn" href="https://github.com/theodore-labs/FinePdf/releases/latest">무료 체험 다운로드</a>
@@ -174,6 +187,64 @@
       종이 장수는 똑같은데 글자는 훨씬 큽니다.
       <strong>4쪽·8쪽으로 갈수록 차이는 더 커집니다.</strong>
       페이지마다 내용 크기가 달라도 글자 크기가 들쭉날쭉해지지 않도록 전체에 같은 배율을 적용합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ══ 무료 대안과의 차이 ══ -->
+<section>
+  <div class="wrap">
+    <h2>"무료로도 되지 않나요?"</h2>
+
+    <p class="lead" style="max-width:780px">
+      됩니다. Windows의 <strong>Microsoft Print to PDF</strong>로도 모아찍기와 확대는 할 수 있습니다.
+      다만 그 확대는 <strong>페이지 기준</strong>이라, 내용이 어디에 있는지 모른 채 배율만 올립니다.
+      여백이 좁은 페이지에서는 <strong>글자가 잘려나갑니다.</strong>
+    </p>
+
+    <figure style="margin-top:30px">
+      <div class="shot">
+        <img src="crop-detail.jpg" loading="lazy"
+             alt="같은 문단을 같은 배율로 인쇄한 결과. 왼쪽 Microsoft Print to PDF는 각 줄의 끝이 잘려 나갔고, 오른쪽 FinePdf는 문장이 온전하다.">
+      </div>
+      <figcaption>같은 슬라이드, 같은 확대 수준. 왼쪽은 줄마다 끝이 잘려 있습니다.</figcaption>
+    </figure>
+
+    <p style="margin-top:30px">
+      더 나쁜 건 <strong>인쇄한 뒤에야 알게 된다는 것</strong>입니다.
+      FinePdf는 페이지마다 잉크가 실제로 찍힌 범위를 먼저 측정하고 그만큼만 잘라내기 때문에,
+      아무리 크게 키워도 내용이 잘리지 않습니다.
+    </p>
+
+    <figure style="margin-top:26px">
+      <div class="shot">
+        <img src="crop-fullsheet.jpg" loading="lazy"
+             alt="A4 한 장에 4쪽을 넣은 전체 비교. 왼쪽은 슬라이드가 셀 밖으로 넘쳐 오른쪽이 잘렸고, 오른쪽은 격자가 반듯하고 내용이 온전하다.">
+      </div>
+      <figcaption>같은 4쪽 모아찍기. 왼쪽은 슬라이드마다 오른쪽 끝이 날아갔습니다.</figcaption>
+    </figure>
+
+    <div class="tablewrap">
+      <table class="cmp">
+        <thead>
+          <tr><th>&nbsp;</th><th>Microsoft Print to PDF</th><th>FinePdf</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>한 장에 여러 쪽</td><td class="yes">○</td><td class="yes">○</td></tr>
+          <tr><td>여백을 줄여 크게 인쇄</td><td class="partial">△ 페이지 기준</td><td class="yes">○ 내용 기준</td></tr>
+          <tr><td><strong>내용이 잘리지 않음</strong></td><td class="no">✗</td><td class="yes">○</td></tr>
+          <tr><td>페이지마다 글자 크기 통일</td><td class="no">✗</td><td class="yes">○</td></tr>
+          <tr><td>책자(A5) 임포지션</td><td class="no">✗</td><td class="yes">○</td></tr>
+          <tr><td>여러 PDF 병합 후 한 번에 변환</td><td class="no">✗</td><td class="yes">○</td></tr>
+          <tr><td>토너 절약 (결과 PDF에 반영)</td><td class="no">✗</td><td class="yes">○</td></tr>
+          <tr><td>인쇄 전 미리보기 · 절약 장수</td><td class="no">✗</td><td class="yes">○</td></tr>
+          <tr><td>같은 설정을 다음에도 그대로</td><td class="no">✗ 매번 수동</td><td class="yes">○</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cmp-note">
+      Microsoft Print to PDF는 Windows 기본 기능입니다. 무료로 되는 일까지 유료로 팔 생각은 없습니다 —
+      위 표에서 ✗ 인 항목들이 FinePdf를 만든 이유입니다.
     </p>
   </div>
 </section>
@@ -265,10 +336,15 @@
     </details>
 
     <details>
-      <summary>프린터 드라이버의 모아찍기와 뭐가 다른가요?</summary>
-      <p>드라이버는 페이지를 통째로 축소합니다. 흰 여백까지 같이 줄어드니 글자만 손해를 봅니다.
-         FinePdf는 페이지에서 글자와 그림이 실제로 있는 영역을 찾아 여백을 먼저 잘라낸 뒤 배치합니다.
-         같은 4쪽 모아찍기라도 글자 크기가 달라지는 이유가 이것입니다.</p>
+      <summary>Microsoft Print to PDF로도 되는 거 아닌가요?</summary>
+      <p>모아찍기와 확대까지는 됩니다. 무료로 되는 일을 유료로 팔 생각은 없습니다.
+         차이는 <strong>확대의 기준</strong>입니다. Print to PDF는 페이지 박스를 기준으로 배율만 올리기 때문에
+         내용이 어디 있는지 모릅니다. 그래서 여백이 좁은 페이지에서는 글자가 잘려나가고,
+         그 사실을 인쇄한 뒤에야 알게 됩니다.</p>
+      <p>FinePdf는 페이지마다 잉크가 실제로 찍힌 범위를 먼저 측정하고 그만큼만 잘라냅니다.
+         그래서 크게 키워도 잘리지 않고, 페이지마다 내용 크기가 달라도 글자 크기가 통일됩니다.
+         책자 임포지션·PDF 병합·토너 절약은 Print to PDF에 아예 없는 기능입니다.
+         위쪽 비교표에 정리해 두었습니다.</p>
     </details>
 
     <details>
