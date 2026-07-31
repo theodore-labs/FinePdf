@@ -18,22 +18,49 @@ N-up PDF converter for Windows that trims wasted margins so your text stays read
 
 ---
 
-## Same 4-up. Same paper. Bigger text.
+## Same sheet. Same two pages. Bigger text.
 
-<img width="1800" height="710" alt="comparison-readme" src="https://github.com/user-attachments/assets/48e12a87-ff71-44fe-bf1f-5bb748ee9ad9" alt="The same four lecture slides printed 4-up on one A4 sheet. Left: Microsoft Print to PDF, small text. Right: FinePdf, margins trimmed first, text noticeably larger.">
-
-
+<img width="1800" height="710" alt="comparison-readme" src="https://github.com/user-attachments/assets/27b6df35-b6bd-4839-ad4a-9b2b0dfa4f09" alt="The same two pages of a paper printed 2-up on one A4 sheet. Left: Microsoft Print to PDF, small text. Right: FinePdf, margins trimmed first, text about 1.4x larger.">
 
 
 
-Everyone tries "4 pages per sheet" once, squints at the result, and never uses it again.
+Everyone tries "2 pages per sheet" once, squints at the result, and never uses it again.
 The problem isn't your printer — it's that **20–30% of a typical PDF page is blank margin**,
 and the printer dutifully shrinks that empty space right along with your text.
 
 FinePdf detects the actual content area of every page, trims the wasted white space
-**first**, and only then packs the pages. Same sheet count, noticeably larger text.
+**first**, and only then packs the pages. Same sheet count, noticeably larger text —
+about **1.4× larger** in the comparison above.
 
 Fewer sheets. Less ink. Still readable.
+
+## "Can't I just use Microsoft Print to PDF?"
+
+For n-up and zooming — yes, and I'm not going to charge you for something Windows already
+does. The difference is **what the zoom is measured against**.
+
+Print to PDF scales the *page box*. It has no idea where your content actually sits, so on
+pages with tight margins it pushes text straight off the edge of the sheet. You find out
+after you've printed.
+
+<img width="1800" height="600" alt="crop-detail" src="https://github.com/user-attachments/assets/10f3b40c-8014-4bd9-864e-80f19d244fbc" alt="The same paragraph printed at the same zoom. Left, Microsoft Print to PDF: every line is cut off at the right. Right, FinePdf: the sentences are complete.">
+
+
+
+FinePdf measures where the ink actually is on each page and trims only that much. Enlarge as
+far as you like — nothing gets cut.
+
+| | Microsoft Print to PDF | FinePdf |
+|---|:---:|:---:|
+| Multiple pages per sheet | ✅ | ✅ |
+| Shrink margins to enlarge | ⚠️ page-based | ✅ content-based |
+| **Never clips your content** | ❌ | ✅ |
+| Uniform text size across pages | ❌ | ✅ |
+| Booklet (A5) imposition | ❌ | ✅ |
+| Merge several PDFs, convert once | ❌ | ✅ |
+| Ink saving baked into the output | ❌ | ✅ |
+| Preview + sheets-saved counter | ❌ | ✅ |
+| Reuse the same settings next time | ❌ manual every time | ✅ |
 
 ---
 
