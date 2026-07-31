@@ -22,8 +22,8 @@ N-up PDF converter for Windows that trims wasted margins so your text stays read
 
 <table>
   <tr>
-    <td width="50%"><img src=<img width="2341" height="1658" alt="after" src="https://github.com/user-attachments/assets/e2c08bbd-2e34-4899-b77b-1b22e7d66db2" /> alt="Printer driver 4-up — the text is shrunk to fit, margins and all"></td>
-    <td width="50%"><img src="<img width="2258" height="1604" alt="before" src="https://github.com/user-attachments/assets/8721c56a-4da4-419a-9ee7-ff06698f4524" />" alt="FinePdf 4-up — margins trimmed first, so the text stays large"></td>
+    <td width="50%"><img src="https://github.com/user-attachments/assets/8721c56a-4da4-419a-9ee7-ff06698f4524" alt="Printer driver 4-up — the text is shrunk to fit, margins and all"></td>
+    <td width="50%"><img src="https://github.com/user-attachments/assets/e2c08bbd-2e34-4899-b77b-1b22e7d66db2" alt="FinePdf 4-up — margins trimmed first, so the text stays large"></td>
   </tr>
   <tr>
     <td align="center"><b>Your printer's 4-up</b><br><i>margins shrink along with the text</i></td>
