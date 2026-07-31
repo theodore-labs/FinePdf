@@ -22,7 +22,7 @@ N-up PDF converter for Windows that trims wasted margins so your text stays read
 
 <table>
   <tr>
-    <td width="50%"><img src="PASTE_BEFORE_PNG_URL_HERE" alt="Printer driver 4-up — the text is shrunk to fit, margins and all"></td>
+    <td width="50%"><img src=<img width="2341" height="1658" alt="after" src="https://github.com/user-attachments/assets/e2c08bbd-2e34-4899-b77b-1b22e7d66db2" /> alt="Printer driver 4-up — the text is shrunk to fit, margins and all"></td>
     <td width="50%"><img src="PASTE_AFTER_PNG_URL_HERE" alt="FinePdf 4-up — margins trimmed first, so the text stays large"></td>
   </tr>
   <tr>
@@ -30,6 +30,10 @@ N-up PDF converter for Windows that trims wasted margins so your text stays read
     <td align="center"><b>FinePdf 4-up</b><br><i>margins trimmed first, text stays readable</i></td>
   </tr>
 </table>
+
+
+
+
 
 Everyone tries "4 pages per sheet" once, squints at the result, and never uses it again.
 The problem isn't your printer — it's that **20–30% of a typical PDF page is blank margin**,
