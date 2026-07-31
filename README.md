@@ -20,19 +20,7 @@ N-up PDF converter for Windows that trims wasted margins so your text stays read
 
 ## Same 4-up. Same paper. Bigger text.
 
-<table>
-  <tr>
-    <td width="50%"><img src="https://github.com/user-attachments/assets/8721c56a-4da4-419a-9ee7-ff06698f4524" alt="Printer driver 4-up — the text is shrunk to fit, margins and all"></td>
-    <td width="50%"><img src="https://github.com/user-attachments/assets/e2c08bbd-2e34-4899-b77b-1b22e7d66db2" alt="FinePdf 4-up — margins trimmed first, so the text stays large"></td>
-  </tr>
-  <tr>
-    <td align="center"><b>Your printer's 4-up</b><br><i>margins shrink along with the text</i></td>
-    <td align="center"><b>FinePdf 4-up</b><br><i>margins trimmed first, text stays readable</i></td>
-  </tr>
-</table>
-
-
-
+<img width="1800" height="530" alt="comparison-readme" src="https://github.com/user-attachments/assets/bb904865-54f9-4c10-9592-79deef8aa312" alt="The same four lecture slides printed 4-up on one A4 sheet. Left: Microsoft Print to PDF, small text. Right: FinePdf, margins trimmed first, text noticeably larger.">
 
 
 
