@@ -1,1 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<title>PDF 모아찍기, 글자는 그대로 — FinePdf | 여백 잘라주는 N-up 인쇄 프로그램</title>
+<meta name="description" content="PDF를 한 장에 2·4·8·16쪽 모아찍을 때 글자가 작아지지 않도록 여백을 먼저 잘라내는 Windows 프로그램. 논문·강의자료 인쇄비와 잉크를 줄입니다. 14일 무료 체험.">
+<link rel="canonical" href="https://theodore-labs.github.io/FinePdf/">
+<link rel="icon" href="logo.png">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://theodore-labs.github.io/FinePdf/">
+<meta property="og:title" content="PDF 모아찍기, 글자는 그대로 — FinePdf">
+<meta property="og:description" content="여백을 먼저 잘라내고 배치합니다. 같은 4쪽 모아찍기인데 글자가 훨씬 큽니다. Windows 10/11, 14일 무료 체험.">
+<meta property="og:image" content="https://theodore-labs.github.io/FinePdf/og-image.png">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "FinePdf",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Windows 10, Windows 11",
+  "description": "PDF를 한 장에 여러 쪽 모아찍을 때 여백을 먼저 잘라내 글자 크기를 유지하는 N-up 인쇄 프로그램.",
+  "url": "https://theodore-labs.github.io/FinePdf/",
+  "downloadUrl": "https://github.com/theodore-labs/FinePdf/releases/latest",
+  "offers": {
+    "@type": "Offer",
+    "price": "23000",
+    "priceCurrency": "KRW",
+    "description": "평생 라이선스 (일회성 결제). 14일 무료 체험 제공."
+  }
+}
+</script>
+
+<!--
+  Google Analytics 4 — 측정 ID 발급 후 아래 주석을 풀고 G-XXXXXXXXXX 를 교체하세요.
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+-->
+
+<style>
+  :root{
+    --ink:#16181d; --body:#3d434e; --mute:#6b7280;
+    --line:#e5e7eb; --bg:#ffffff; --soft:#f7f8fa;
+    --accent:#0969da; --accent-dark:#0757ba;
+    --max:1080px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--body);
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:17px; line-height:1.75; word-break:keep-all;
+    -webkit-text-size-adjust:100%;
+  }
+  img{max-width:100%; height:auto; display:block}
+  a{color:var(--accent)}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 20px}
+  section{padding:72px 0; border-top:1px solid var(--line)}
+  section:first-of-type{border-top:0}
+  h1,h2,h3{color:var(--ink); line-height:1.35; letter-spacing:-.02em; margin:0 0 16px}
+  h1{font-size:clamp(30px,5.2vw,50px); font-weight:800}
+  h2{font-size:clamp(23px,3.4vw,32px); font-weight:700}
+  h3{font-size:18px; font-weight:700; margin-bottom:6px}
+  p{margin:0 0 16px}
+  .lead{font-size:clamp(17px,2.1vw,20px); color:var(--body)}
+  .mute{color:var(--mute); font-size:15px}
+
+  /* 히어로 */
+  .hero{padding:64px 0 56px; text-align:center}
+  .brand{display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:26px}
+  .brand img{width:30px; height:30px}
+  .brand span{font-weight:800; color:var(--ink); font-size:19px; letter-spacing:-.01em}
+  .hero h1{margin-bottom:18px}
+  .hero .lead{max-width:640px; margin:0 auto 30px}
+
+  .btn{
+    display:inline-block; padding:16px 34px; border-radius:10px;
+    font-size:18px; font-weight:700; text-decoration:none;
+    background:var(--accent); color:#fff; border:1px solid var(--accent);
+    transition:background .15s;
+  }
+  .btn:hover{background:var(--accent-dark)}
+  .btn.ghost{background:#fff; color:var(--accent)}
+  .btn.ghost:hover{background:var(--soft)}
+  .meta{margin-top:14px; font-size:14.5px; color:var(--mute)}
+
+  figure{margin:0}
+  figcaption{margin-top:12px; font-size:14.5px; color:var(--mute); text-align:center}
+  .shot{border:1px solid var(--line); border-radius:12px; overflow:hidden}
+
+  .why p{max-width:760px}
+  .why strong{color:var(--ink)}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:14px; margin-top:28px}
+  .card{background:var(--soft); border:1px solid var(--line); border-radius:12px; padding:20px 22px}
+  .card p{margin:0; font-size:15.5px; color:var(--mute); line-height:1.65}
+
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  @media(max-width:640px){ .two{grid-template-columns:1fr} }
+
+  /* 가격 */
+  .price-box{
+    max-width:520px; margin:0 auto; text-align:center;
+    border:2px solid var(--accent); border-radius:16px; padding:36px 28px;
+  }
+  .price{font-size:44px; font-weight:800; color:var(--ink); line-height:1.2}
+  .price small{display:block; font-size:15px; font-weight:500; color:var(--mute); margin-top:6px}
+  .price-box ul{list-style:none; padding:0; margin:24px 0; text-align:left; font-size:16px}
+  .price-box li{padding:7px 0 7px 26px; position:relative}
+  .price-box li::before{content:"✓"; position:absolute; left:0; color:var(--accent); font-weight:700}
+
+  details{border-bottom:1px solid var(--line); padding:18px 0}
+  details:first-of-type{border-top:1px solid var(--line)}
+  summary{cursor:pointer; font-weight:700; color:var(--ink); font-size:17px; list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"＋"; color:var(--accent); margin-right:10px; font-weight:700}
+  details[open] summary::before{content:"−"}
+  details p{margin:14px 0 0; font-size:16px}
+  details p:last-child{margin-bottom:0}
+
+  footer{border-top:1px solid var(--line); padding:44px 0 56px; font-size:14.5px; color:var(--mute)}
+  footer a{color:var(--mute)}
+  .center{text-align:center}
+</style>
+</head>
+<body>
+
+<!-- ══ 히어로 ══ -->
+<div class="wrap hero">
+  <div class="brand"><img src="logo.png" alt=""><span>FinePdf</span></div>
+
+  <h1>모아찍기 해도,<br>글자는 그대로.</h1>
+
+  <p class="lead">
+    프린터의 모아찍기는 글자를 못 알아볼 만큼 줄여버립니다.
+    원인은 폰트가 아니라 <strong>여백</strong>입니다.
+    FinePdf는 페이지마다 실제 내용 영역을 찾아 여백을 먼저 잘라낸 뒤 배치합니다.
+  </p>
+
+  <a class="btn" href="https://github.com/theodore-labs/FinePdf/releases/latest">무료 체험 다운로드</a>
+  <p class="meta">Windows 10 / 11 (64비트) · 14일 무료 · 기능 제한 없음 · 가입도 카드도 필요 없음</p>
+</div>
+
+<!-- ══ 비교 ══ -->
+<section class="why">
+  <div class="wrap">
+    <h2>같은 종이, 같은 2쪽. 글자만 커집니다.</h2>
+
+    <figure>
+      <div class="shot">
+        <img src="comparison.png"
+             alt="같은 논문 2쪽을 A4 한 장에 인쇄한 결과 비교. 왼쪽은 Microsoft Print to PDF로 글자가 작고, 오른쪽은 FinePdf로 여백을 먼저 잘라내 글자가 약 1.4배 크다.">
+      </div>
+      <figcaption>같은 논문 2쪽을 A4 한 장에 인쇄한 결과입니다. 글자 크기 약 <strong>1.4배</strong> 차이.</figcaption>
+    </figure>
+
+    <p style="margin-top:30px">
+      강의 슬라이드나 논문 PDF는 <strong>페이지의 20~30%가 흰 여백</strong>입니다.
+      프린터 드라이버의 모아찍기는 그 빈 공간까지 글자와 함께 그대로 축소합니다.
+      그래서 모아찍기를 한 번 써보고는 다시 안 쓰게 되는 겁니다.
+    </p>
+    <p>
+      FinePdf는 순서를 바꿉니다. <strong>여백을 먼저 잘라내고, 그다음에 배치합니다.</strong>
+      종이 장수는 똑같은데 글자는 훨씬 큽니다.
+      <strong>4쪽·8쪽으로 갈수록 차이는 더 커집니다.</strong>
+      페이지마다 내용 크기가 달라도 글자 크기가 들쭉날쭉해지지 않도록 전체에 같은 배율을 적용합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ══ 데모 ══ -->
+<section>
+  <div class="wrap">
+    <h2>인쇄하기 전에 미리 보고, 몇 장 아끼는지 확인</h2>
+    <p class="lead" style="margin-bottom:28px">
+      PDF를 끌어다 놓으면 바로 결과가 보입니다. 배치·여백·잉크 설정을 바꿀 때마다 미리보기가 즉시 갱신됩니다.
+    </p>
+    <!--
+      MP4 로 교체할 때는 아래 <img> 를 이걸로 바꾸세요 (GIF 보다 훨씬 가볍고 부드럽습니다):
+      <video src="demo.mp4" poster="demo-poster.jpg" autoplay loop muted playsinline
+             preload="metadata" style="width:100%;display:block"></video>
+    -->
+    <figure>
+      <div class="shot">
+        <img src="demo.gif" alt="FinePdf 실행 화면. PDF를 열고 배치와 여백을 조절하면 오른쪽 미리보기와 절약되는 장수가 즉시 갱신된다." loading="lazy">
+      </div>
+    </figure>
+  </div>
+</section>
+
+<!-- ══ 기능 ══ -->
+<section>
+  <div class="wrap">
+    <h2>이런 것들이 됩니다</h2>
+    <div class="grid">
+      <div class="card"><h3>모아찍기 2 · 4 · 8 · 16쪽</h3><p>가로/세로 방향을 자동으로 판단해 가장 잘 맞는 배치를 고릅니다.</p></div>
+      <div class="card"><h3>여백 자동 제거</h3><p>페이지마다 실제 내용 영역을 감지해 빈 여백을 먼저 잘라냅니다.</p></div>
+      <div class="card"><h3>책자 만들기</h3><p>A4를 반으로 접으면 A5 책자가 되도록 페이지 순서를 배열합니다.</p></div>
+      <div class="card"><h3>여러 PDF 병합</h3><p>파일 여러 개를 끌어다 놓으면 하나로 합쳐 한 번에 변환합니다.</p></div>
+      <div class="card"><h3>잉크 절약 · 흑백 변환</h3><p>토너 사용량을 단계별로 줄입니다. 결과 PDF에 그대로 반영됩니다.</p></div>
+      <div class="card"><h3>미리보기 · 절약 카운터</h3><p>변환 전에 몇 장이 몇 장으로 줄어드는지 숫자로 보여줍니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 잉크 절약 ══ -->
+<section>
+  <div class="wrap">
+    <h2>토너도 같이 아낍니다</h2>
+    <p class="lead" style="margin-bottom:28px">흑백 잉크 절약 모드를 켜면 같은 내용을 훨씬 적은 토너로 인쇄합니다.</p>
+    <figure>
+      <div class="two">
+        <div class="shot"><img src="ink-before.jpg" alt="FinePdf에서 잉크 절약 모드로 변환한 문서" loading="lazy"></div>
+        <div class="shot"><img src="ink-after.jpg" alt="잉크 절약이 적용된 결과를 인쇄하는 화면" loading="lazy"></div>
+      </div>
+      <figcaption>흑백 잉크 절약 (40%)</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══ 가격 ══ -->
+<section id="price">
+  <div class="wrap">
+    <h2 class="center">먼저 14일 써보세요</h2>
+    <p class="lead center" style="max-width:620px; margin:0 auto 34px">
+      체험판에 기능 제한이 없습니다. 쓸 만한지 직접 확인한 다음에 결정하시면 됩니다.
+    </p>
+
+    <div class="price-box">
+      <div class="price">₩23,000<small>한 번만 결제 · 구독 아님</small></div>
+      <ul>
+        <li>14일 무료 체험 (모든 기능 열려 있음)</li>
+        <li>평생 라이선스 — 매달 빠져나가는 돈 없음</li>
+        <li>같은 일을 하는 FinePrint는 약 $100입니다</li>
+        <li>Windows 10 / 11 · .NET 설치 불필요</li>
+      </ul>
+      <a class="btn" href="https://github.com/theodore-labs/FinePdf/releases/latest">무료 체험 다운로드</a>
+      <p class="meta" style="margin-top:18px">
+        먼저 써보고 마음에 드시면 <a href="https://finepdf.lemonsqueezy.com">여기서 구매</a>하실 수 있습니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section>
+  <div class="wrap">
+    <h2>자주 묻는 것</h2>
+
+    <details>
+      <summary>맥이나 리눅스에서도 되나요?</summary>
+      <p>아직 안 됩니다. 지금은 Windows 10 / 11 (64비트) 전용입니다.
+         맥 버전이 필요하시면 <a href="https://github.com/theodore-labs/FinePdf/issues">GitHub 이슈</a>에 남겨주세요.
+         수요가 보이면 만들 이유가 생깁니다.</p>
+    </details>
+
+    <details>
+      <summary>프린터 드라이버의 모아찍기와 뭐가 다른가요?</summary>
+      <p>드라이버는 페이지를 통째로 축소합니다. 흰 여백까지 같이 줄어드니 글자만 손해를 봅니다.
+         FinePdf는 페이지에서 글자와 그림이 실제로 있는 영역을 찾아 여백을 먼저 잘라낸 뒤 배치합니다.
+         같은 4쪽 모아찍기라도 글자 크기가 달라지는 이유가 이것입니다.</p>
+    </details>
+
+    <details>
+      <summary>체험판에 제한이 있나요?</summary>
+      <p>없습니다. 14일 동안 모든 기능이 열려 있고, 결과물에 워터마크도 없습니다.
+         가입이나 카드 등록도 필요 없습니다. 받아서 바로 쓰시면 됩니다.</p>
+    </details>
+
+    <details>
+      <summary>결제하면 라이선스는 언제 오나요?</summary>
+      <p>라이선스 파일을 사람이 직접 발급합니다(1인 개발입니다). 결제 후 48시간 안에 이메일로 보내드립니다.
+         받으신 파일을 <em>About → Register</em>에서 불러오면 등록이 끝납니다.</p>
+    </details>
+
+    <details>
+      <summary>환불되나요?</summary>
+      <p>14일 체험으로 충분히 확인하고 결제하시는 구조라 환불 요청은 드물지만,
+         결제 후 문제가 있으면 <a href="mailto:finepdf.team@gmail.com">finepdf.team@gmail.com</a>으로 연락 주세요.
+         결제는 Lemon Squeezy를 통해 처리됩니다.</p>
+    </details>
+
+    <details>
+      <summary>어떤 PDF든 다 되나요?</summary>
+      <p>대부분 됩니다. 다만 스캔본처럼 글자가 이미지로 들어 있거나 회전 정보가 특이한 PDF는
+         여백 감지가 완벽하지 않을 수 있습니다.
+         변환이 이상하게 되는 파일이 있으면 그 PDF를 보내주세요. 가장 도움이 되는 제보입니다.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ══ 마무리 CTA ══ -->
+<section class="center">
+  <div class="wrap">
+    <h2>인쇄비, 절반으로 줄여보세요</h2>
+    <p class="lead" style="margin-bottom:28px">설치 없이 exe 하나로도 실행됩니다.</p>
+    <a class="btn" href="https://github.com/theodore-labs/FinePdf/releases/latest">무료 체험 다운로드</a>
+    <p class="meta">Windows 10 / 11 (64비트) · 14일 무료</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap center">
+    <p>
+      <a href="https://github.com/theodore-labs/FinePdf">GitHub</a> ·
+      <a href="https://github.com/theodore-labs/FinePdf/issues">버그 제보</a> ·
+      <a href="mailto:finepdf.team@gmail.com">finepdf.team@gmail.com</a>
+    </p>
+    <p>인쇄비가 아까워서 직접 만든 프로그램입니다. FinePdf</p>
+  </div>
+</footer>
+
+</body>
+</html>
